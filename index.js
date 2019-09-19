@@ -1,31 +1,215 @@
-let arr = [];
-
-for (let i = 0; i < 100; i++) {
-  arr.push(Math.round(Math.random() * 200 - 100));
-}
-
-arr.sort(function(a, b) {
-  return b - a;
-});
-
-let html = "<ul>";
-for (i = 0; i < arr.length; i++) {
-  html += "<li>" + arr[i] + "</li>";
-}
-
-html += "</ul>";
-
-document.body.innerHTML += html;
-
-let b = document.querySelectorAll("li");
-console.log(b);
-for (let i = 0; i < b.length; i++) {
-  let cc = +b[i].innerHTML;
-  if (cc % 2 == 0) {
-    b[i].remove();
+const snake = [
+  {
+    x: 70,
+    y: 20
+  },
+  {
+    x: 70,
+    y: 30
+  },
+  {
+    x: 80,
+    y: 30
   }
-}
+];
+let food = [];
+setInterval(() => {
+  if (food.length > 6) {
+    const div = document.createElement("div");
+    div.className = "food";
+    div.style.top = `${50}px`;
+    div.style.left = `${50}px`;
+    root.appendChild(div);
+  }
+}, 1000);
 
+const MAX_X = 600;
+const MAX_Y = 440;
+const STEP = 10;
+snake.forEach(e => {
+  const div = document.createElement("div");
+  e.link = div;
+  div.className = "block";
+
+  div.style.top = `${e.y}px`;
+  div.style.left = `${e.x}px`;
+
+  root.appendChild(div);
+
+  console.log(div);
+});
+const x = snake[0].x;
+const y = snake[0].y;
+window.onkeyup = event => {
+  if ([37, 38, 39, 40, 65, 87, 68, 83].includes(event.keyCode)) {
+    console.log(event.keyCode);
+    switch (event.keyCode) {
+      case 87: //w
+        console.log("end", snake[snake.length - 1]);
+        const x = snake[0].x;
+        const y = snake[0].y;
+        //todo
+        snake[snake.length - 1].x = x;
+        snake[snake.length - 1].y = y - STEP >= 0 ? y - STEP : MAX_Y;
+        snake.unshift(snake.pop());
+        //
+        snake[0].link.style.top = `${snake[0].y}px`;
+        snake[0].link.style.left = `${snake[0].x}px`;
+
+        break;
+    }
+    switch (event.keyCode) {
+      case 68: //e
+        console.log("end", snake[snake.length - 1]);
+
+        //todo
+        snake[snake.length - 1].x = x + STEP >= MAX_X ? 0 : x + STEP;
+        snake[snake.length - 1].y = y;
+        snake.unshift(snake.pop());
+        //
+        snake[0].link.style.top = `${snake[0].y}px`;
+        snake[0].link.style.left = `${snake[0].x}px`;
+
+        break;
+    }
+  }
+};
+
+////////Домой
+
+// // let html = "";
+// snake.forEach(e => {
+//   const div = document.createElement("div");
+//   e.link = div;
+//   div.className = "block";
+//   root.appendChild(div);
+// });
+// root.innerHTML = html;
+
+// // let html = "";
+// // root.innerHTML = snake.reduce(function(html, e) {
+// //   return (html += `<div class='block' style="top:${e.y}px; left: ${e.x}px;"></div>`);
+// // }, "");
+// // window.onkeyup = event => {
+// //   log.innerHTML += `<li>${event.key} : ${new Date().toString()} </li>`;
+// // };
+
+// //  let a = new Date();
+// // let hhh = "";
+// window.onkeyup = event => {
+//   if ([65, 87, 68, 83, 37, 38, 39, 40].includes(event.keyCode)) {
+//     var a = new Date();
+//     console.log(event.keyCode + a);
+
+//   }
+//     log.innerHTML += `<li>${event.key} : ${new Date().toString()} </li>`;
+
+//     // let n = 300;
+//     // let nn = 300;
+//     // return (hhh += `<div class='block' style="top:${nn}px; left:${n} px;"></div>`);
+//   }
+
+//   // log.innerHTML (property)
+
+//   //awds 65 87 68 83
+//   // arrow 37 38 39 40
+
+// const snake = [{
+// x:70,
+// y:30
+// },
+
+// {
+// x:80,
+// y:40,
+// },
+
+// {
+// x:50,
+// y:60
+// },
+
+// {
+// x:90,
+// y:50
+// },
+
+// {
+// x:60,
+// y:40
+// },
+// ];
+// let html = "";
+
+// snake.forEach(a =>{
+//   html += '<div class="block"style='top:${a,y}px ;left${a,y}'
+// }
+
+// let chess = [
+//   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+// ];
+
+// function draw() {
+//   var out = "";
+//   // let m = 0;
+//   for (let i = 0; i < chess.length; i++) {
+//     let arr = chess[i];
+//     for (let k = 0; k < arr.length; k++) {
+//       let alex = randColor();
+//       out += `<div class ='chess-block' style='background: ${alex}'></div>`;
+//     }
+//   }
+//   document.querySelector(".setk").innerHTML = out;
+// }
+// function randColor() {
+//   var r = Math.floor(Math.random() * 256),
+//     g = Math.floor(Math.random() * 256),
+//     b = Math.floor(Math.random() * 256);
+//   return "#" + r.toString(16) + g.toString(16) + b.toString(16);
+// let i = {
+//   weight: 82,
+//   Age: 22,
+//   growth: 186
+// };
+// console.log(i);
+
+// let arr = [];
+
+// for (let i = 0; i < 100; i++) {
+//   arr.push(Math.round(Math.random() * 200 - 100));
+// }
+
+// arr.sort(function(a, b) {
+//   return b - a;
+// });
+
+// let html = "<ul>";
+// for (i = 0; i < arr.length; i++) {
+//   html += "<li>" + arr[i] + "</li>";
+// }
+
+// html += "</ul>";
+
+// document.body.innerHTML += html;
+
+// let b = document.querySelectorAll("li");
+// console.log(b);
+// for (let i = 0; i < b.length; i++) {
+//   let cc = +b[i].innerHTML;
+//   if (cc % 2 == 0) {
+//     b[i].remove();
+//   }
+// }
+// fin
 // let ar = [];
 // let out = "";
 // for (i = 0; i < 100; i++) {
@@ -313,4 +497,4 @@ for (let i = 0; i < b.length; i++) {
 // for (; typeof a == "string"; ) {
 //   a = prompt("3Ha4eHue");
 //   console.log(typeof a);
-// }
+//
